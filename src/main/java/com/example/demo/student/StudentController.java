@@ -17,26 +17,35 @@ public class StudentController {
     }
 
     //GET
+    //http://localhost:8080/api/v1/student
     @GetMapping
     public List<Student> getStudents() {
         return studentService.getStudents();
     }
 
     //POST
+    //http://localhost:8080/api/v1/student
+    //{
+    //    "name": "tunca",
+    //    "email": "tunca@yy",
+    //    "dob":"1995-12-11"
+    //}
     @PostMapping
     public void registerNewStudent(@RequestBody Student student) {
         studentService.addNewStudent(student);
     }
 
     //DELETE
+    //http://localhost:8080/api/v1/student/1
     @DeleteMapping(path = "{studentId}")
     public void deleteStudent(@PathVariable("studentId") Long studentId) {
         studentService.deleteStudent(studentId);
     }
 
     //PUT (update)
-    @Transactional
-    public void updateStudent(Long studentId) {
-        studentService.deleteStudent(studentId);
+    //http://localhost:8080/api/v1/student/1?name=abc&email=abc@mail
+    @PutMapping(path = "{studentId}")
+    public void updateStudent(@PathVariable("studentId") Long studentId, @RequestParam(required = false) String name, @RequestParam(required = false) String email) {
+        studentService.updateStudent(studentId, name, email);
     }
 }
